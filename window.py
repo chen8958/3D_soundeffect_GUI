@@ -6,9 +6,9 @@ import scipy.io.wavfile
 import sounddevice as sd
 #open wav file
 #filename=input('plese enter file name : \n');
-def fun(f1,f2,h):
+def fun(f1,h):
   f=wave.open(f1,'rb');
-  print('natural end');
+  print('processing.....................................');
   params=f.getparams();
   original_data_string=f.readframes(params[3]);
   original_data=np.fromstring(original_data_string,dtype=np.short);
@@ -89,16 +89,18 @@ frm_r.pack(side='right')
 tk.Label(frm_l, text='input_file name').pack()
 e_inputfile = tk.Entry(frm_l)
 e_inputfile.pack()
-tk.Label(frm_l, text='output_file name').pack()
-e_outputfile = tk.Entry(frm_l)
-e_outputfile.pack()
+#tk.Label(frm_l, text='output_file name').pack()
+#e_outputfile = tk.Entry(frm_l)
+#e_outputfile.pack()
 def play():
     #sd.play(output,44100);
     print(output);
 def stop():
     sd.stop();
 def h1():
-    fun(e_inputfile.get(),e_outputfile.get(),'h')
+    fun(e_inputfile.get(),'SW')
+def h2():
+    fun(e_inputfile.get(),'XTC')
 
 b_play = tk.Button(frm_l, 
     text='play',      
@@ -111,14 +113,14 @@ b_stop = tk.Button(frm_l,
     command=stop)     
 b_stop.pack()
 b1 = tk.Button(frm_r, 
-    text='h1',      
+    text='source widely',      
     width=15, height=2, 
     command=h1)     
 b1.pack()
 b2 = tk.Button(frm_r, 
-    text='h2',      
+    text='XTC',      
     width=15, height=2, 
-    command=h1)     
+    command=h2)     
 b2.pack()
 b3 = tk.Button(frm_r, 
     text='h3',      
