@@ -1,7 +1,10 @@
-import Tkinter as tk
 import wave
 import numpy as np
-import os
+import sys
+if sys.version_info.major==2:
+  import Tkinter as tk
+elif sys.version_info.major==3:
+  import tkinter as tk
 import scipy.io.wavfile
 import sounddevice as sd
 #open wav file
@@ -41,28 +44,21 @@ def fun(f1,h):
   
 
   output1=np.convolve(original_data[0,:],filter_data1);
-  output1=output1/output1.max();
 
   output2=np.convolve(original_data[0,:],filter_data2);
-  output2=output2/output2.max();
 
   output3=np.convolve(original_data[0,:],filter_data3);
-  output3=output3/output3.max();
 
   output4=np.convolve(original_data[0,:],filter_data4);
-  output4=output4/output4.max();
 
   output5=np.convolve(original_data[1,:],filter_data1);
-  output5=output5/output5.max();
 
   output6=np.convolve(original_data[1,:],filter_data2);
-  output6=output6/output6.max();
 
   output7=np.convolve(original_data[1,:],filter_data3);
-  output7=output7/output7.max();
 
   output8=np.convolve(original_data[1,:],filter_data4);
-  output8=output8/output8.max();
+
 
   sink1=output1+output5;
   sink2=output2+output6;
@@ -70,6 +66,7 @@ def fun(f1,h):
   sink4=output4+output8;
   global output
   output=np.array([sink1,sink2,sink3,sink4]);
+  output=output/np.absolute(output).max();
   output=output.T;
   #sd.play(output,44100);
   #scipy.io.wavfile.write(f2, 44100, output);
@@ -146,68 +143,65 @@ def fun2(f1,h):
   original_data=np.array([original_data[0,:],original_data[1,:],original_data[0,:]-original_data[1,:],original_data[1,:]-original_data[0,:],(original_data[0,:]+original_data[1,:])*0.707]);
 
   output1=np.convolve(original_data[0,:],filter_data1);
-  output1=output1/output1.max();
 
   output2=np.convolve(original_data[0,:],filter_data2);
-  output2=output2/output2.max();
 
   output3=np.convolve(original_data[0,:],filter_data3);
-  output3=output3/output3.max();
+
 
   output4=np.convolve(original_data[0,:],filter_data4);
-  output4=output4/output4.max();
+
 
 
   output5=np.convolve(original_data[1,:],filter_data5);
-  output5=output5/output5.max();
+
 
   output6=np.convolve(original_data[1,:],filter_data6);
-  output6=output6/output6.max();
+
 
   output7=np.convolve(original_data[1,:],filter_data7);
-  output7=output7/output7.max();
+
 
   output8=np.convolve(original_data[1,:],filter_data8);
-  output8=output8/output8.max();
 
 
   output9=np.convolve(original_data[2,:],filter_data9);
-  output9=output9/output9.max();
+
 
   output10=np.convolve(original_data[2,:],filter_data10);
-  output10=output10/output10.max();
+
 
   output11=np.convolve(original_data[2,:],filter_data11);
-  output11=output11/output11.max();
+
 
   output12=np.convolve(original_data[2,:],filter_data12);
-  output12=output12/output12.max();
+
 
 
   output13=np.convolve(original_data[3,:],filter_data13);
-  output13=output13/output13.max();
+
 
   output14=np.convolve(original_data[3,:],filter_data14);
-  output14=output14/output14.max();
+
 
   output15=np.convolve(original_data[3,:],filter_data15);
-  output15=output15/output15.max();
+
 
   output16=np.convolve(original_data[3,:],filter_data16);
-  output16=output16/output16.max();
+
 
 
   output17=np.convolve(original_data[4,:],filter_data17);
-  output17=output17/output17.max();
+
 
   output18=np.convolve(original_data[4,:],filter_data18);
-  output18=output18/output18.max();
+
 
   output19=np.convolve(original_data[4,:],filter_data19);
-  output19=output19/output19.max();
+
 
   output20=np.convolve(original_data[4,:],filter_data20);
-  output20=output20/output20.max();
+
 
 
 
@@ -217,6 +211,7 @@ def fun2(f1,h):
   sink4=output4+output8+output12+output20;
   global output
   output=np.array([sink1,sink2,sink3,sink4]);
+  output=output/np.absolute(output).max();
   output=output.T;
 
 
@@ -243,7 +238,7 @@ e_inputfile.pack()
 #e_outputfile = tk.Entry(frm_l)
 #e_outputfile.pack()
 def play():
-    #sd.play(output,44100);
+    sd.play(output,44100);
     print(output);
 def stop():
     sd.stop();
