@@ -15,7 +15,7 @@ def fun(f1,h):
   params=f.getparams();
   original_data_string=f.readframes(params[3]);
   original_data=np.fromstring(original_data_string,dtype=np.short);
-  original_data.shape=-1,2;
+  original_data.shape=-1,params[0];
   original_data=original_data.T;
   f=open(h+'1.txt','r');
   filter_data_string=f.read();
@@ -76,7 +76,7 @@ def fun2(f1,h):
   params=f.getparams();
   original_data_string=f.readframes(params[3]);
   original_data=np.fromstring(original_data_string,dtype=np.short);
-  original_data.shape=-1,2;
+  original_data.shape=-1,params[0];
   original_data=original_data.T;
   f=open(h+'1.txt','r');
   filter_data_string=f.read();
@@ -140,7 +140,7 @@ def fun2(f1,h):
   filter_data20=np.fromstring(filter_data_string,dtype=np.float,sep=',');  
 
 
-  original_data=np.array([original_data[0,:],original_data[1,:],original_data[0,:]-original_data[1,:],original_data[1,:]-original_data[0,:],(original_data[0,:]+original_data[1,:])*0.707]);
+  original_data=np.array([original_data[0,:],original_data[1,:],original_data[0,:]-original_data[1,:],original_data[1,:]-original_data[0,:],(original_data[0,:]*0.5+original_data[1,:]*0.5)]);
 
   output1=np.convolve(original_data[0,:],filter_data1);
 
@@ -255,8 +255,11 @@ def play_original():
     params=f.getparams();
     original_data_string=f.readframes(params[3]);
     original_data=np.fromstring(original_data_string,dtype=np.short);
-    original_data.shape=-1,2;
-    sd.play(original_data,44100)
+    original_data.shape=-1,params[0];
+    original_data=original_data.astype('float');
+    original_data=original_data/np.absolute(original_data).max();
+    origianl_data=0.08*original_data;
+    sd.play(original_data,44100);
 
 original = tk.Button(frm_l, 
     text='play origianl sound',      
