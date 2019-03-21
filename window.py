@@ -249,6 +249,20 @@ def h2():
 def h3():
     fun2(e_inputfile.get(),'VS')
 
+def play_original():
+    f=wave.open(e_inputfile.get(),'rb');
+    print('processing.....................................');
+    params=f.getparams();
+    original_data_string=f.readframes(params[3]);
+    original_data=np.fromstring(original_data_string,dtype=np.short);
+    original_data.shape=-1,2;
+    sd.play(original_data,44100)
+
+original = tk.Button(frm_l, 
+    text='play origianl sound',      
+    width=15, height=2, 
+    command=play_original)     
+original.pack() 
 b_play = tk.Button(frm_l, 
     text='play',      
     width=15, height=2, 
