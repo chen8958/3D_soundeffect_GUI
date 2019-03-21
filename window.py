@@ -225,15 +225,34 @@ def fun2(f1,h):
 window = tk.Tk()
 window.title('Listening test')
 window.geometry('500x250')
+
+
+
+
+
 frm = tk.Frame(window)
 frm.pack()
-frm_l = tk.Frame(frm)
-frm_r = tk.Frame(frm)
-frm_l.pack(side='left')
-frm_r.pack(side='right')
-tk.Label(frm_l, text='input_file name').pack()
-e_inputfile = tk.Entry(frm_l)
+frm_1 = tk.Frame(window)
+frm_2 = tk.Frame(window)
+frm_3 = tk.Frame(window)
+frm_1.pack()
+frm_2.pack()
+frm_3.pack()
+tk.Label(frm_1, text='input_file name').pack()
+e_inputfile = tk.Entry(frm_1)
 e_inputfile.pack()
+
+
+
+
+
+
+
+
+
+
+
+
 #tk.Label(frm_l, text='output_file name').pack()
 #e_outputfile = tk.Entry(frm_l)
 #e_outputfile.pack()
@@ -260,37 +279,58 @@ def play_original():
     original_data=original_data/np.absolute(original_data).max();
     origianl_data=0.08*original_data;
     sd.play(original_data,44100);
+buttom_width=9;
+buttom_height=2;
 
-original = tk.Button(frm_l, 
-    text='play origianl sound',      
-    width=15, height=2, 
+original = tk.Button(frm_1, 
+    text='origianl sound',      
+    width = buttom_width, height = buttom_height, 
     command=play_original)     
-original.pack() 
-b_play = tk.Button(frm_l, 
+original.pack(side='left') 
+b_play = tk.Button(frm_3, 
     text='play',      
-    width=15, height=2, 
+    width = buttom_width, height = buttom_height, 
     command=play)     
-b_play.pack() 
-b_stop = tk.Button(frm_l, 
+b_play.pack(side='left') 
+b_stop = tk.Button(frm_3, 
     text='stop',      
-    width=15, height=2, 
+    width = buttom_width, height = buttom_height, 
     command=stop)     
-b_stop.pack()
-b1 = tk.Button(frm_r, 
+b_stop.pack(side='left')
+b1 = tk.Button(frm_1, 
     text='source widely',      
-    width=15, height=2, 
+    width = buttom_width, height = buttom_height, 
     command=h1)     
-b1.pack()
-b2 = tk.Button(frm_r, 
-    text='XTC',      
-    width=15, height=2, 
-    command=h2)     
-b2.pack()
-b3 = tk.Button(frm_r, 
-    text='VS',      
-    width=15, height=2, 
+b1.pack(side='left')
+b2 = tk.Button(frm_1, 
+    text='source widely',      
+    width = buttom_width, height = buttom_height, 
     command=h3)     
-b3.pack()   
+b2.pack(side='left')
+b3 = tk.Button(frm_1, 
+    text='XTC',      
+    width = buttom_width, height = buttom_height, 
+    command=h2)     
+b3.pack(side='left')
+b4 = tk.Button(frm_1, 
+    text='VS',      
+    width = buttom_width, height = buttom_height, 
+    command=h3)     
+b4.pack(side='left')
+
+b_eq1 = tk.Button( frm_2 , text = 'Raw' , width = buttom_width , height = buttom_height , command= h1)
+b_eq2 = tk.Button( frm_2 , text = 'Rock' , width = buttom_width , height = buttom_height , command= h1)
+b_eq3 = tk.Button( frm_2 , text = 'Vocal' , width = buttom_width , height = buttom_height , command= h1)
+b_eq4 = tk.Button( frm_2 , text = 'Classic' , width = buttom_width , height = buttom_height , command= h1)
+b_eq5 = tk.Button( frm_2 , text = 'Jazz' , width = buttom_width , height = buttom_height , command= h1)
+b_eq1.pack(side = 'left');
+b_eq2.pack(side = 'left');
+b_eq3.pack(side = 'left');
+b_eq4.pack(side = 'left');
+b_eq5.pack(side = 'left');
+
+
+   
 
 window.mainloop()
 
