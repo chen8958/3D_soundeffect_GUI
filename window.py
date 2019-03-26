@@ -214,6 +214,16 @@ def fun2(f1,h):
   output=output/np.absolute(output).max();
   output=output.T;
 
+def fun3(eq):
+  f=open(eq+'.txt','r');
+  filter_data_string=f.read();
+  filter_data=np.fromstring(filter_data_string,dtype=np.float,sep=',');
+  global output
+  output=output.T;
+  output=np.array([np.convolve(output[0,:],filter_data),np.convolve(output[1,:],filter_data),np.convolve(output[2,:],filter_data),np.convolve(output[3,:],filter_data)]);
+  output=output.T;
+  print(output);
+
 
 
 
@@ -317,12 +327,20 @@ b4 = tk.Button(frm_1,
     width = buttom_width, height = buttom_height, 
     command=h3)     
 b4.pack(side='left')
+def rock():
+  fun3('rock');
+def vocal():
+  fun3('vocal');
+def classic():
+  fun3('classic');
+def jazz():
+  fun3('pop');
 
-b_eq1 = tk.Button( frm_2 , text = 'Raw' , width = buttom_width , height = buttom_height , command= h1)
-b_eq2 = tk.Button( frm_2 , text = 'Rock' , width = buttom_width , height = buttom_height , command= h1)
-b_eq3 = tk.Button( frm_2 , text = 'Vocal' , width = buttom_width , height = buttom_height , command= h1)
-b_eq4 = tk.Button( frm_2 , text = 'Classic' , width = buttom_width , height = buttom_height , command= h1)
-b_eq5 = tk.Button( frm_2 , text = 'Jazz' , width = buttom_width , height = buttom_height , command= h1)
+b_eq1 = tk.Button( frm_2 , text = 'Raw' , width = buttom_width , height = buttom_height )
+b_eq2 = tk.Button( frm_2 , text = 'Rock' , width = buttom_width , height = buttom_height , command= rock)
+b_eq3 = tk.Button( frm_2 , text = 'Vocal' , width = buttom_width , height = buttom_height , command= vocal)
+b_eq4 = tk.Button( frm_2 , text = 'Classic' , width = buttom_width , height = buttom_height , command= classic)
+b_eq5 = tk.Button( frm_2 , text = 'Jazz' , width = buttom_width , height = buttom_height , command= jazz)
 b_eq1.pack(side = 'left');
 b_eq2.pack(side = 'left');
 b_eq3.pack(side = 'left');
