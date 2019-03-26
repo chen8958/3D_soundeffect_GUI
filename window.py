@@ -51,13 +51,13 @@ def fun(f1,h):
 
   output4=np.convolve(original_data[0,:],filter_data4);
 
-  output5=np.convolve(original_data[1,:],filter_data1);
+  output5=np.convolve(original_data[1,:],filter_data5);
 
-  output6=np.convolve(original_data[1,:],filter_data2);
+  output6=np.convolve(original_data[1,:],filter_data6);
 
-  output7=np.convolve(original_data[1,:],filter_data3);
+  output7=np.convolve(original_data[1,:],filter_data7);
 
-  output8=np.convolve(original_data[1,:],filter_data4);
+  output8=np.convolve(original_data[1,:],filter_data8);
 
 
   sink1=output1+output5;
@@ -205,10 +205,10 @@ def fun2(f1,h):
 
 
 
-  sink1=output1+output5+output9+output17;
-  sink2=output2+output6+output10+output18;
-  sink3=output3+output7+output11+output19;
-  sink4=output4+output8+output12+output20;
+  sink1=output1+output5+output9+output17+output13;
+  sink2=output2+output6+output10+output18+output14;
+  sink3=output3+output7+output11+output19+output15;
+  sink4=output4+output8+output12+output20+output16;
   global output
   output=np.array([sink1,sink2,sink3,sink4]);
   output=output/np.absolute(output).max();
