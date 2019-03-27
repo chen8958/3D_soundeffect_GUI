@@ -219,9 +219,16 @@ def fun3(eq):
   filter_data_string=f.read();
   filter_data=np.fromstring(filter_data_string,dtype=np.float,sep=',');
   global output
+  if output.shape[1]==4:
+	  output=output.T;
+	  output=np.array([np.convolve(output[0,:],filter_data)\
+	,np.convolve(output[1,:],filter_data),np.convolve(output[2,:],filter_data)\
+	,np.convolve(output[3,:],filter_data)]);
+  else:
+	  output=output.T;
+	  output=np.array([np.convolve(output[0,:],filter_data),np.convolve(output[1,:],filter_data)]);
   output=output.T;
-  output=np.array([np.convolve(output[0,:],filter_data),np.convolve(output[1,:],filter_data),np.convolve(output[2,:],filter_data),np.convolve(output[3,:],filter_data)]);
-  output=output.T;
+  output=output/np.absolute(output).max();
   print(output);
 
 
@@ -267,6 +274,7 @@ e_inputfile.pack()
 #e_outputfile = tk.Entry(frm_l)
 #e_outputfile.pack()
 def play():
+    global output;
     sd.play(output,44100);
     print(output);
 def stop():
@@ -277,6 +285,21 @@ def h2():
     fun(e_inputfile.get(),'XTC')
 def h3():
     fun2(e_inputfile.get(),'VS')
+def load_origin():
+    f=wave.open(e_inputfile.get(),'rb');
+    print('processing.....................................');
+    params=f.getparams();
+    original_data_string=f.readframes(params[3]);
+    original_data=np.fromstring(original_data_string,dtype=np.short);
+    original_data.shape=-1,params[0];
+    original_data=original_data.astype('float');
+    original_data=original_data/np.absolute(original_data).max();
+    origianl_data=0.08*original_data;
+    global output;
+    if original_data.shape[1]==2:
+       output=origianl_data;
+    else:
+       output=np.array(original_data[:,2],original_data[:,0],original_data[:,1],original_data[:,3]);
 
 def play_original():
     f=wave.open(e_inputfile.get(),'rb');
@@ -295,7 +318,7 @@ buttom_height=2;
 original = tk.Button(frm_1, 
     text='origianl sound',      
     width = buttom_width, height = buttom_height, 
-    command=play_original)     
+    command=load_origin)     
 original.pack(side='left') 
 b_play = tk.Button(frm_3, 
     text='play',      
@@ -335,8 +358,11 @@ def classic():
   fun3('classic');
 def jazz():
   fun3('pop');
+def raw():
+  global output
+  output=output/np.absolute(output).max();
 
-b_eq1 = tk.Button( frm_2 , text = 'Raw' , width = buttom_width , height = buttom_height )
+b_eq1 = tk.Button( frm_2 , text = 'Raw' , width = buttom_width , height = buttom_height ,command=raw)
 b_eq2 = tk.Button( frm_2 , text = 'Rock' , width = buttom_width , height = buttom_height , command= rock)
 b_eq3 = tk.Button( frm_2 , text = 'Vocal' , width = buttom_width , height = buttom_height , command= vocal)
 b_eq4 = tk.Button( frm_2 , text = 'Classic' , width = buttom_width , height = buttom_height , command= classic)
