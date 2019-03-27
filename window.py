@@ -41,7 +41,7 @@ def fun(f1,h):
   f=open(h+'8.txt','r');
   filter_data_string=f.read();
   filter_data8=np.fromstring(filter_data_string,dtype=np.float,sep=',');
-  
+
 
   output1=np.convolve(original_data[0,:],filter_data1);
 
@@ -137,7 +137,7 @@ def fun2(f1,h):
   filter_data19=np.fromstring(filter_data_string,dtype=np.float,sep=',');
   f=open(h+'20.txt','r');
   filter_data_string=f.read();
-  filter_data20=np.fromstring(filter_data_string,dtype=np.float,sep=',');  
+  filter_data20=np.fromstring(filter_data_string,dtype=np.float,sep=',');
 
 
   original_data=np.array([original_data[0,:],original_data[1,:],original_data[0,:]-original_data[1,:],original_data[1,:]-original_data[0,:],(original_data[0,:]*0.5+original_data[1,:]*0.5)]);
@@ -258,6 +258,9 @@ frm_3.pack()
 tk.Label(frm_1, text='input_file name').pack()
 e_inputfile = tk.Entry(frm_1)
 e_inputfile.pack()
+tk.Label(frm_1, text='effect').pack()
+tk.Label(frm_2, text='equalization').pack()
+
 
 
 
@@ -315,40 +318,40 @@ def play_original():
 buttom_width=9;
 buttom_height=2;
 
-original = tk.Button(frm_1, 
-    text='origianl sound',      
-    width = buttom_width, height = buttom_height, 
-    command=load_origin)     
-original.pack(side='left') 
-b_play = tk.Button(frm_3, 
-    text='play',      
-    width = buttom_width, height = buttom_height, 
-    command=play)     
-b_play.pack(side='left') 
-b_stop = tk.Button(frm_3, 
-    text='stop',      
-    width = buttom_width, height = buttom_height, 
-    command=stop)     
+original = tk.Button(frm_1,
+    text='origianl sound',
+    width = buttom_width, height = buttom_height,
+    command=load_origin)
+original.pack(side='left')
+b_play = tk.Button(frm_3,
+    text='play',
+    width = buttom_width, height = buttom_height,
+    command=play)
+b_play.pack(side='left')
+b_stop = tk.Button(frm_3,
+    text='stop',
+    width = buttom_width, height = buttom_height,
+    command=stop)
 b_stop.pack(side='left')
-b1 = tk.Button(frm_1, 
-    text='source widely',      
-    width = buttom_width, height = buttom_height, 
-    command=h1)     
+b1 = tk.Button(frm_1,
+    text='source widely',
+    width = buttom_width, height = buttom_height,
+    command=h1)
 b1.pack(side='left')
-b2 = tk.Button(frm_1, 
-    text='source widely',      
-    width = buttom_width, height = buttom_height, 
-    command=h3)     
+b2 = tk.Button(frm_1,
+    text='source widely',
+    width = buttom_width, height = buttom_height,
+    command=h3)
 b2.pack(side='left')
-b3 = tk.Button(frm_1, 
-    text='XTC',      
-    width = buttom_width, height = buttom_height, 
-    command=h2)     
+b3 = tk.Button(frm_1,
+    text='XTC',
+    width = buttom_width, height = buttom_height,
+    command=h2)
 b3.pack(side='left')
-b4 = tk.Button(frm_1, 
-    text='VS',      
-    width = buttom_width, height = buttom_height, 
-    command=h3)     
+b4 = tk.Button(frm_1,
+    text='VS',
+    width = buttom_width, height = buttom_height,
+    command=h3)
 b4.pack(side='left')
 def rock():
   fun3('rock');
@@ -374,7 +377,6 @@ b_eq4.pack(side = 'left');
 b_eq5.pack(side = 'left');
 
 
-   
+
 
 window.mainloop()
-
