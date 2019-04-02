@@ -260,6 +260,7 @@ e_inputfile = tk.Entry(frm_1)
 e_inputfile.pack()
 tk.Label(frm_1, text='effect').pack()
 tk.Label(frm_2, text='equalization').pack()
+tk.Label(frm_3, text=' ').pack()
 
 
 
@@ -302,8 +303,18 @@ def load_origin():
     if original_data.shape[1]==2:
        output=origianl_data;
     else:
-       output=np.array(original_data[:,2],original_data[:,0],original_data[:,1],original_data[:,3]);
-
+        size=original_data[:,1].shape;
+        original_data1=original_data[:,1]
+        original_data1.shape=size[0],1;
+        original_data2=original_data[:,2]
+        original_data2.shape=size[0],1;
+        original_data3=original_data[:,3]
+        original_data3.shape=size[0],1;
+        original_data0=original_data[:,0]
+        original_data0.shape=size[0],1;
+        temp1=np.concatenate((original_data2,original_data0),axis=1);
+        temp2=np.concatenate((original_data1,original_data3),axis=1);
+        output=np.concatenate((temp1,temp2),axis=1);
 def play_original():
     f=wave.open(e_inputfile.get(),'rb');
     print('processing.....................................');
@@ -315,43 +326,38 @@ def play_original():
     original_data=original_data/np.absolute(original_data).max();
     origianl_data=0.08*original_data;
     sd.play(original_data,44100);
-buttom_width=9;
-buttom_height=2;
+button_width=9;
+button_height=2;
 
 original = tk.Button(frm_1,
     text='origianl sound',
-    width = buttom_width, height = buttom_height,
-    command=load_origin)
+    width = button_width, height = button_height,
+    command=load_origin,bg='yellow')
 original.pack(side='left')
 b_play = tk.Button(frm_3,
     text='play',
-    width = buttom_width, height = buttom_height,
-    command=play)
+    width = button_width, height = button_height,
+    command=play,bg='red')
 b_play.pack(side='left')
 b_stop = tk.Button(frm_3,
     text='stop',
-    width = buttom_width, height = buttom_height,
-    command=stop)
+    width = button_width, height = button_height,
+    command=stop,bg='red')
 b_stop.pack(side='left')
 b1 = tk.Button(frm_1,
-    text='source widely',
-    width = buttom_width, height = buttom_height,
-    command=h1)
+    text='source widening',
+    width = button_width, height = button_height,
+    command=h1,bg='yellow')
 b1.pack(side='left')
-b2 = tk.Button(frm_1,
-    text='source widely',
-    width = buttom_width, height = buttom_height,
-    command=h3)
-b2.pack(side='left')
 b3 = tk.Button(frm_1,
     text='XTC',
-    width = buttom_width, height = buttom_height,
-    command=h2)
+    width = button_width, height = button_height,
+    command=h2,bg='yellow')
 b3.pack(side='left')
 b4 = tk.Button(frm_1,
     text='VS',
-    width = buttom_width, height = buttom_height,
-    command=h3)
+    width = button_width, height = button_height,
+    command=h3,bg='yellow')
 b4.pack(side='left')
 def rock():
   fun3('rock');
@@ -365,11 +371,11 @@ def raw():
   global output
   output=output/np.absolute(output).max();
 
-b_eq1 = tk.Button( frm_2 , text = 'Raw' , width = buttom_width , height = buttom_height ,command=raw)
-b_eq2 = tk.Button( frm_2 , text = 'Rock' , width = buttom_width , height = buttom_height , command= rock)
-b_eq3 = tk.Button( frm_2 , text = 'Vocal' , width = buttom_width , height = buttom_height , command= vocal)
-b_eq4 = tk.Button( frm_2 , text = 'Classic' , width = buttom_width , height = buttom_height , command= classic)
-b_eq5 = tk.Button( frm_2 , text = 'Jazz' , width = buttom_width , height = buttom_height , command= jazz)
+b_eq1 = tk.Button( frm_2 , text = 'Raw' , width = button_width , height = button_height ,command=raw,bg='green')
+b_eq2 = tk.Button( frm_2 , text = 'Rock' , width = button_width , height = button_height , command= rock,bg='green')
+b_eq3 = tk.Button( frm_2 , text = 'Vocal' , width = button_width , height = button_height , command= vocal,bg='green')
+b_eq4 = tk.Button( frm_2 , text = 'Classic' , width = button_width , height = button_height , command= classic,bg='green')
+b_eq5 = tk.Button( frm_2 , text = 'Jazz' , width = button_width , height = button_height , command= jazz,bg='green')
 b_eq1.pack(side = 'left');
 b_eq2.pack(side = 'left');
 b_eq3.pack(side = 'left');
