@@ -334,14 +334,14 @@ b_stop = tk.Button(frm_3,
     command=stop)
 b_stop.pack(side='left')
 b1 = tk.Button(frm_1,
-    text='source widely',
+    text='source widely1',
     width = buttom_width, height = buttom_height,
     command=h1)
 b1.pack(side='left')
 b2 = tk.Button(frm_1,
-    text='source widely',
+    text='source widely2',
     width = buttom_width, height = buttom_height,
-    command=h3)
+    command=h1)
 b2.pack(side='left')
 b3 = tk.Button(frm_1,
     text='XTC',
