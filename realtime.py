@@ -48,7 +48,7 @@ filter_data7=np.fromstring(filter_data_string,dtype=np.float32,sep=',');
 f=open(h+'8.txt','r');
 filter_data_string=f.read();
 filter_data8=np.fromstring(filter_data_string,dtype=np.float32,sep=',');
-
+buffer=np.zeros((4,len(filter_data1)),'float32');
 params=wf.getparams();
 print('start stream \n')
 while data != '':
@@ -69,8 +69,12 @@ while data != '':
     sink4=output4+output8;
     output=np.array([sink1,sink2,sink3,sink4]);
     output=output/np.absolute(output).max();
-    output=output[:,0:1024]
-    print(output.dtype)
+    output[:,0:len(buffer[0])]=output[:,0:len(buffer[0])]+buffer;
+    buffer=output[:,1024:];
+    output=output[:,0:1024];
+
+    #print(output.dtype,output.shape,buffer.shape)
+    print(output.shape)
     output=output.T;
     output=output.reshape(1,-1);
 
