@@ -1,4 +1,8 @@
-
+#!/usr/bin/python
+# -*- coding = utf-8 -*-
+"""
+@author : Tony Chen
+"""
 import pyaudio
 import wave
 import sys
@@ -14,14 +18,14 @@ if len(sys.argv) < 2:
 wf = wave.open(sys.argv[1], 'rb')
 
 p = pyaudio.PyAudio()
-
+##channel must be equall output channel (4) channels=wf.getnchannels()
 stream = p.open(format=p.get_format_from_width(4),
-                channels=wf.getnchannels(),
+                channels=4,
                 rate=wf.getframerate(),
                 output=True)
 
 data = wf.readframes(CHUNK)
-h='SW';
+h='XTC';
 
 global filter_data1,filter_data2,filter_data3,filter_data4,filter_data5,filter_data6,filter_data7,filter_data8;
 f=open(h+'1.txt','r');
@@ -51,6 +55,7 @@ filter_data8=np.fromstring(filter_data_string,dtype=np.float32,sep=',');
 buffer=np.zeros((4,len(filter_data1)),'float32');
 params=wf.getparams();
 print('start stream \n')
+i=0;
 while data != '':
     original_data=np.fromstring(data,dtype=np.short);
     original_data.shape=-1,params[0];
@@ -72,9 +77,10 @@ while data != '':
     output[:,0:len(buffer[0])]=output[:,0:len(buffer[0])]+buffer;
     buffer=output[:,1024:];
     output=output[:,0:1024];
-
+    ##attention!! if two channels output may cause down sampling
     #print(output.dtype,output.shape,buffer.shape)
-    print(output.shape)
+    print("callbacktime = %d"%(i));
+    i=i+1;
     output=output.T;
     output=output.reshape(1,-1);
 
