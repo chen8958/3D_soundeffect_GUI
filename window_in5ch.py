@@ -7,9 +7,19 @@ elif sys.version_info.major==3:
   import tkinter as tk
 import scipy.io.wavfile
 import sounddevice as sd
+import EQ
 #open wav file
 #filename=input('plese enter file name : \n');
+#global variable
+g=[[0,0,0,3,5,5,5,3,2,2],
+ [0,4,4,2,0,0,0,0,1,2],
+ [0,3,4,2,-1,-1,-1,0,4,5],
+ [0,1,2,3,0,0,3,3,1,3]]
+output=np.array([]);
+#processing by except VS
 def fun(f1,h):
+  global output;
+  output=np.array([]);
   f=wave.open(f1,'rb');
   print('processing.....................................');
   params=f.getparams();
@@ -59,17 +69,17 @@ def fun(f1,h):
 
   output8=np.convolve(original_data[1,:],filter_data8);
 
-
   sink1=output1+output5;
   sink2=output2+output6;
   sink3=output3+output7;
   sink4=output4+output8;
-  global output
   output=np.array([sink1,sink2,sink3,sink4]);
   output=output/np.absolute(output).max();
   output=output.T;
   #sd.play(output,44100);
   #scipy.io.wavfile.write(f2, 44100, output);
+
+ #processing by VS
 def fun2(f1,h):
   f=wave.open(f1,'rb');
   print('processing.....................................');
@@ -203,8 +213,6 @@ def fun2(f1,h):
   output20=np.convolve(original_data[4,:],filter_data20);
 
 
-
-
   sink1=output1+output5+output9+output13;
   sink2=output2+output6+output10+output14;
   sink3=output3+output7+output11+output15;
@@ -213,6 +221,8 @@ def fun2(f1,h):
   output=np.array([sink1,sink2,sink3,sink4]);
   output=output/np.absolute(output).max();
   output=output.T;
+
+#processing by eq
 """
 def fun3(eq):
   f=open(eq+'.txt','r');
@@ -230,6 +240,7 @@ def fun3(eq):
   output=output.T;
   output=output/np.absolute(output).max();
   print(output);
+"""
 """
 def fun3(eq):
     f=open(eq+'1.txt','r');
@@ -326,21 +337,38 @@ def fun3(eq):
     output=output.T;
     output=output/np.absolute(output).max();
     print(output);
+    """
+def fun3(eq):
+    global output;
+    global g;
+    print(output.shape)
+    if not output.any():
+        load_origin();
+    elif output.shape[0]==4:
+        for i in range(output.shape[1]):
+            output[:,0]=EQ.equilizer(output[:,0],44100,g[eq]);
+            output[:,1]=EQ.equilizer(output[:,1],44100,g[eq]);
+            output[:,2]=EQ.equilizer(output[:,2],44100,g[eq]);
+            output[:,3]=EQ.equilizer(output[:,3],44100,g[eq]);
+    elif output.shape[0]==2:
+        for i in range(output.shape[1]):
+            output[:,0]=EQ.equilizer(output[:,0],44100,g[eq]);
+            output[:,1]=EQ.equilizer(output[:,1],44100,g[eq]);
+    elif output.shape[0]==5:
+        for i in range(output.shape[1]):
+            output[:,0]=EQ.equilizer(output[:,0],44100,g[eq]);
+            output[:,1]=EQ.equilizer(output[:,1],44100,g[eq]);
+            output[:,2]=EQ.equilizer(output[:,2],44100,g[eq]);
+            output[:,3]=EQ.equilizer(output[:,3],44100,g[eq]);
+            output[:,4]=EQ.equilizer(output[:,3],44100,g[eq]);
 
-
-
-
-
+    output=output/np.absolute(output).max();
 
 
 
 window = tk.Tk()
 window.title('Listening test')
-window.geometry('500x250')
-
-
-
-
+window.geometry('700x500')
 
 frm = tk.Frame(window)
 frm.pack()
@@ -356,18 +384,6 @@ e_inputfile.pack()
 tk.Label(frm_1, text='effect').pack()
 tk.Label(frm_2, text='equalization').pack()
 tk.Label(frm_3, text=' ').pack()
-
-
-
-
-
-
-
-
-
-
-
-
 
 #tk.Label(frm_l, text='output_file name').pack()
 #e_outputfile = tk.Entry(frm_l)
@@ -455,14 +471,17 @@ b4 = tk.Button(frm_1,
     width = button_width, height = button_height,
     command=h3,bg='yellow')
 b4.pack(side='left')
+"""
+0 vocal 1 classic 2 pop 3 rock
+"""
 def rock():
-  fun3('rock');
+  fun3(3);
 def vocal():
-  fun3('vocal');
+  fun3(0);
 def classic():
-  fun3('classic');
+  fun3(1);
 def jazz():
-  fun3('pop');
+  fun3(2);
 def raw():
   global output
   output=output/np.absolute(output).max();
@@ -477,8 +496,5 @@ b_eq2.pack(side = 'left');
 b_eq3.pack(side = 'left');
 b_eq4.pack(side = 'left');
 b_eq5.pack(side = 'left');
-
-
-
 
 window.mainloop()

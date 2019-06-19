@@ -345,12 +345,10 @@ b_stop = tk.Button(frm_3,
     command=stop,bg='red')
 b_stop.pack(side='left')
 b1 = tk.Button(frm_1,
-<<<<<<< HEAD
     text='source widening',
     width = button_width, height = button_height,
     command=h1,bg='yellow')
 b1.pack(side='left')
-=======
     text='source widely1',
     width = buttom_width, height = buttom_height,
     command=h1)
@@ -360,7 +358,6 @@ b2 = tk.Button(frm_1,
     width = buttom_width, height = buttom_height,
     command=h1)
 b2.pack(side='left')
->>>>>>> 56c95c993f993258b9befde117695a204833a138
 b3 = tk.Button(frm_1,
     text='XTC',
     width = button_width, height = button_height,
